@@ -20,11 +20,9 @@ public class NewStudentLogFilter implements Filter {
             return;
         }
 
-        Boolean blockchainBool = false;
-        if (knowsBlockchain != null)
-            blockchainBool = true;
+        boolean blockchainBool = knowsBlockchain != null;
 
-        System.out.println(String.format("Added student: %s, %s, %s", name, averageScore, blockchainBool));
+        System.out.printf("Added student: %s, %s, %s%n", name, averageScore, blockchainBool);
 
         filterChain.doFilter(servletRequest, servletResponse);
     }
