@@ -1,6 +1,6 @@
-package org.dal.interfaces;
+package org.structure.dal.interfaces;
 
-import org.models.Appointment;
+import org.structure.models.Appointment;
 
 import java.util.List;
 

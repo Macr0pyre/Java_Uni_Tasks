@@ -1,6 +1,6 @@
-package org.dal.interfaces;
+package org.structure.dal.interfaces;
 
-import org.models.Doctor;
+import org.structure.models.Doctor;
 
 import java.util.List;
 

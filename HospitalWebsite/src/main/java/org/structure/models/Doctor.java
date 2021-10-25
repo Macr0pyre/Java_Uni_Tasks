@@ -1,4 +1,4 @@
-package org.models;
+package org.structure.models;
 
 public class Doctor {
     private Long id;
@@ -7,11 +7,7 @@ public class Doctor {
     private String email;
     private String login;
     private String password;
-
-    private enum Speciality {
-        THERAPIST, OPHTHALMOLOGIST, PSYCHIATRIST, DERMATOLOGIST, ONCOLOGIST,
-        NEUROLOGIST, GYNECOLOGIST, UROLOGIST, CARDIOLOGIST
-    }
+    private Speciality speciality;
 
     public Long getId() {
         return id;
@@ -59,5 +55,13 @@ public class Doctor {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public Speciality getSpeciality() {
+        return speciality;
+    }
+
+    public void setSpeciality(Speciality speciality) {
+        this.speciality = speciality;
     }
 }

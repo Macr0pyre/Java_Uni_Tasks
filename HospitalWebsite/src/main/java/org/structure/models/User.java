@@ -1,4 +1,4 @@
-package org.models;
+package org.structure.models;
 
 public class User {
     private Long id;

@@ -1,11 +1,10 @@
-package org.models;
+package org.structure.models;
 
 public class Appointment {
     private Long id;
     private Registration registration;
     private String description;
-
-    private enum Status {ATTENDED, NOT_ATTENDED, SICK, HEALTHY}
+    private Status status;
 
     public Long getId() {
         return id;
@@ -29,5 +28,13 @@ public class Appointment {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public Status getStatus() {
+        return status;
+    }
+
+    public void setStatus(Status status) {
+        this.status = status;
     }
 }

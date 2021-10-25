@@ -1,4 +1,4 @@
-package org.models;
+package org.structure.models;
 
 import java.sql.Date;
 

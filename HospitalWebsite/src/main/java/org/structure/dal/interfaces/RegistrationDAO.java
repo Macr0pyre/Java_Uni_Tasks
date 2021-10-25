@@ -1,6 +1,6 @@
-package org.dal.interfaces;
+package org.structure.dal.interfaces;
 
-import org.models.Registration;
+import org.structure.models.Registration;
 
 import java.util.List;
 

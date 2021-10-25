@@ -1,19 +1,20 @@
-package org.dal.impls;
+package org.structure.dal.impls;
 
-import org.dal.interfaces.UserDAO;
-import org.models.User;
+import org.structure.dal.interfaces.UserDAO;
+import org.structure.models.User;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class UserRealDAO implements UserDAO {
     @Override
     public User get(long id) {
-        return null;
+        return new User();
     }
 
     @Override
     public List<User> getAll() {
-        return null;
+        return new ArrayList<>();
     }
 
     @Override

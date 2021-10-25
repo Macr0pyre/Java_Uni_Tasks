@@ -1,6 +1,6 @@
-package org.dal.interfaces;
+package org.structure.dal.interfaces;
 
-import org.models.User;
+import org.structure.models.User;
 
 import java.util.List;
 

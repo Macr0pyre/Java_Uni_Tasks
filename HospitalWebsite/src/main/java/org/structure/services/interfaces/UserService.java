@@ -1,6 +1,6 @@
-package org.services.interfaces;
+package org.structure.services.interfaces;
 
-import org.models.User;
+import org.structure.models.User;
 
 import java.util.List;
 
@@ -11,7 +11,7 @@ public interface UserService {
 
     void addUser(User user);
 
-    void updateUser(User user);
+    void updateUser(long id, String type, String newValue);
 
     void deleteUser(long id);
 }

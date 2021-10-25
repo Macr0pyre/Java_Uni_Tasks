@@ -1,6 +1,6 @@
-package org.dal.interfaces;
+package org.structure.dal.interfaces;
 
-import org.models.MedicalCard;
+import org.structure.models.MedicalCard;
 
 import java.util.List;
 

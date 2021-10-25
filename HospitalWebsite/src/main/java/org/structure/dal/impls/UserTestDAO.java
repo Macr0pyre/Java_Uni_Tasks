@@ -1,8 +1,7 @@
-package org.dal.impls;
+package org.structure.dal.impls;
 
-import org.dal.interfaces.UserDAO;
-import org.models.User;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.structure.dal.interfaces.UserDAO;
+import org.structure.models.User;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
@@ -11,8 +10,11 @@ import java.util.Optional;
 @Component
 public class UserTestDAO implements UserDAO {
 
-    @Autowired
     private List<User> testUsers;
+
+    public UserTestDAO(List<User> testUsers) {
+        this.testUsers = testUsers;
+    }
 
     @Override
     public User get(long id) {
@@ -40,9 +42,13 @@ public class UserTestDAO implements UserDAO {
 
     @Override
     public void delete(long id) {
-        Optional<User> user = Optional.ofNullable(get(id));
-        if (user.isPresent()) {
+        User user = get(id);
+        if(user.getName() != null) {
             testUsers.remove(user);
         }
+    }
+
+    public void setTestUsers(List<User> testUsers) {
+        this.testUsers = testUsers;
     }
 }
