@@ -2,6 +2,7 @@ package org.structure.services.impls;
 
 import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.structure.models.User;
 import org.structure.repository.AppointmentRepository;
@@ -21,6 +22,8 @@ public class UserServiceImpl implements UserService {
 
     private final AppointmentRepository appointmentRepository;
 
+    private final PasswordEncoder passwordEncoder;
+
     @SneakyThrows
     public User getUser(long id) {
         return userRepository.findById(id).orElseThrow(Exception::new);
@@ -31,6 +34,7 @@ public class UserServiceImpl implements UserService {
     }
 
     public void addUser(User user) {
+        user.setPassword(passwordEncoder.encode(user.getPassword()));
         userRepository.save(user);
     }
 
@@ -46,7 +50,7 @@ public class UserServiceImpl implements UserService {
         } else if (type.equals("login")) {
             user.setLogin(newValue);
         } else if (type.equals("password")) {
-            user.setPassword(newValue);
+            user.setPassword(passwordEncoder.encode(user.getPassword()));
         }
 
         userRepository.save(user);

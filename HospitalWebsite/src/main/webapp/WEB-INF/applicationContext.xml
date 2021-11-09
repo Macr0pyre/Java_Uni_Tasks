@@ -22,34 +22,9 @@
     <mvc:annotation-driven/>
     <jpa:repositories base-package="org.structure.repository"/>
 
-    <bean id="templateResolver" class="org.thymeleaf.spring5.templateresolver.SpringResourceTemplateResolver">
+    <bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
         <property name="prefix" value="/WEB-INF/views/"/>
         <property name="suffix" value=".jsp"/>
-    </bean>
-
-    <bean id="templateEngine" class="org.thymeleaf.spring5.SpringTemplateEngine">
-        <property name="templateResolver" ref="templateResolver"/>
-        <property name="enableSpringELCompiler" value="true"/>
-    </bean>
-
-    <bean class="org.thymeleaf.spring5.view.ThymeleafViewResolver">
-        <property name="templateEngine" ref="templateEngine"/>
-        <property name="order" value="1"/>
-        <property name="viewNames" value="*"/>
-    </bean>
-
-    <util:list id="users" value-type="org.structure.models.User"/>
-
-    <bean id="userDao" class="org.structure.dal.impls.UserTestDAO">
-        <property name="testUsers" ref="users"/>
-    </bean>
-
-    <bean id="userService" class="org.structure.services.impls.UserServiceImpl">
-        <constructor-arg name="userDao" ref="userDao"/>
-    </bean>
-
-    <bean id="userController" class="org.structure.controllers.UserController">
-        <constructor-arg name="userService" ref="userService"/>
     </bean>
 
 </beans>
