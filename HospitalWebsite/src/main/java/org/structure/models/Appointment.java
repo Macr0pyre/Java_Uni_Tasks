@@ -1,40 +1,26 @@
 package org.structure.models;
 
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+import javax.persistence.*;
+
+@Data
+@Entity
+@Table(name = "appointments")
+@AllArgsConstructor
+@NoArgsConstructor
 public class Appointment {
+    @Id
+    @Column(name = "registration_id")
     private Long id;
+    @OneToOne
+    @MapsId
+    @JoinColumn(name = "registration_id")
     private Registration registration;
     private String description;
     private Status status;
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public Registration getRegistration() {
-        return registration;
-    }
-
-    public void setRegistration(Registration registration) {
-        this.registration = registration;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
-    public Status getStatus() {
-        return status;
-    }
-
-    public void setStatus(Status status) {
-        this.status = status;
-    }
+    @Column(name= "is_visited")
+    private Boolean isVisited;
 }

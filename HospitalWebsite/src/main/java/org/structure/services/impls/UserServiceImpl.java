@@ -1,32 +1,41 @@
 package org.structure.services.impls;
 
-import org.structure.dal.interfaces.UserDAO;
+import lombok.RequiredArgsConstructor;
+import lombok.SneakyThrows;
+import org.springframework.stereotype.Service;
 import org.structure.models.User;
+import org.structure.repository.AppointmentRepository;
+import org.structure.repository.RegistrationRepository;
+import org.structure.repository.UserRepository;
 import org.structure.services.interfaces.UserService;
 
 import java.util.List;
 
+@Service
+@RequiredArgsConstructor
 public class UserServiceImpl implements UserService {
-    private UserDAO userDao;
 
-    public UserServiceImpl(UserDAO userDao) {
-        this.userDao = userDao;
-    }
+    private final UserRepository userRepository;
 
+    private final RegistrationRepository registrationRepository;
+
+    private final AppointmentRepository appointmentRepository;
+
+    @SneakyThrows
     public User getUser(long id) {
-        return userDao.get(id);
+        return userRepository.findById(id).orElseThrow(Exception::new);
     }
 
     public List<User> getAllUsers() {
-        return userDao.getAll();
+        return userRepository.findAll();
     }
 
     public void addUser(User user) {
-        userDao.add(user);
+        userRepository.save(user);
     }
 
     public void updateUser(long id, String type, String newValue) {
-        User user = userDao.get(id);
+        User user = getUser(id);
 
         if (type.equals("name")) {
             user.setName(newValue);
@@ -40,10 +49,10 @@ public class UserServiceImpl implements UserService {
             user.setPassword(newValue);
         }
 
-        userDao.update(user);
+        userRepository.save(user);
     }
 
     public void deleteUser(long id) {
-        userDao.delete(id);
+        userRepository.deleteById(id);
     }
 }

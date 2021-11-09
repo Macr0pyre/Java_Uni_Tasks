@@ -1,42 +1,31 @@
 package org.structure.models;
 
-import java.sql.Date;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
+import javax.persistence.*;
+import java.time.LocalDateTime;
+
+@Data
+@Entity
+@Table(name = "registrations")
+@AllArgsConstructor
+@NoArgsConstructor
 public class Registration {
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name="user_id")
     private User user;
+    @ManyToOne
+    @JoinColumn(name = "doctor_id")
     private Doctor doctor;
-    private Date date;
+    @Column(name="time_of_appointment")
+    private LocalDateTime date;
 
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public User getUser() {
-        return user;
-    }
-
-    public void setUser(User user) {
-        this.user = user;
-    }
-
-    public Doctor getDoctor() {
-        return doctor;
-    }
-
-    public void setDoctor(Doctor doctor) {
-        this.doctor = doctor;
-    }
-
-    public Date getDate() {
-        return date;
-    }
-
-    public void setDate(Date date) {
-        this.date = date;
-    }
+    @OneToOne(mappedBy = "registration", cascade = CascadeType.ALL)
+    @PrimaryKeyJoinColumn
+    private Appointment appointment;
 }
