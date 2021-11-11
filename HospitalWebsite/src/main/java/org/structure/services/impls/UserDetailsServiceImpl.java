@@ -43,7 +43,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 //        }
         User user = userRepository.findUserByLogin(login).orElse(null);
         return new org.springframework.security.core.userdetails.User(
-                    user.getName(),
+                    user.getLogin(),
                     user.getPassword(),
                     List.of(Role.USER)
             );

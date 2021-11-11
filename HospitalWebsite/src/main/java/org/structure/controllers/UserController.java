@@ -1,5 +1,6 @@
 package org.structure.controllers;
 
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.structure.models.User;
 import org.structure.services.interfaces.UserService;
 import org.springframework.stereotype.Controller;
@@ -7,6 +8,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.ModelAndView;
 
+import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
@@ -50,13 +52,12 @@ public class UserController {
 
     @PostMapping("/add-user")
     public ModelAndView addUserRequest(HttpServletRequest request, HttpServletResponse response) throws IOException {
-        String id = request.getParameter("id");
         String name = request.getParameter("name");
         String number = request.getParameter("number");
         String email = request.getParameter("email");
         String login = request.getParameter("login");
         String password = request.getParameter("password");
-        addNewUser(id, name, number, email, login, password);
+        addNewUser(name, number, email, login, password);
 
         return new ModelAndView("add_user");
     }
@@ -66,22 +67,19 @@ public class UserController {
         String id = request.getParameter("id");
         String type = request.getParameter("parameter");
         String newValue = request.getParameter("newValue");
-        updateUser(id, type, newValue);
+        userService.updateUser(SecurityContextHolder.getContext().getAuthentication().getName(), type, newValue);
 
         return new ModelAndView("update_user");
     }
 
     @PostMapping("/delete-user")
-    public ModelAndView deleteUserRequest(HttpServletRequest request, HttpServletResponse response) throws IOException {
-        String id = request.getParameter("id");
-        deleteUser(id);
-
-        return new ModelAndView("delete_user");
+    public String deleteUserRequest() throws IOException {
+        userService.deleteUserByLogin(SecurityContextHolder.getContext().getAuthentication().getName());
+        return "redirect:/logout";
     }
 
-    private void addNewUser(String id, String name, String number, String email, String login, String password) {
+    private void addNewUser(String name, String number, String email, String login, String password) {
         User user = new User();
-        user.setId(Long.parseLong(id));
         user.setName(name);
         user.setNumber(number);
         user.setEmail(email);
@@ -89,13 +87,5 @@ public class UserController {
         user.setPassword(password);
 
         userService.addUser(user);
-    }
-
-    private void updateUser(String id, String parameter, String newValue) {
-        userService.updateUser(Long.parseLong(id), parameter, newValue);
-    }
-
-    private void deleteUser(String id) {
-        userService.deleteUser(Long.parseLong(id));
     }
 }

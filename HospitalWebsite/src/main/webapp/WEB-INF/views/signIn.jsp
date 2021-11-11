@@ -7,7 +7,7 @@
     <c:if test="${param.error != null}">
         <p>Invalid username / password</p>
     </c:if>
-    <form method="POST" action="/app/sign-in">
+    <form method="POST" action="/sign-in">
         <p><label for="login">Логин:</label></p>
         <input type="text" id="login" name="login" placeholder="Login"/>
 

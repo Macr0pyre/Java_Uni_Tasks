@@ -10,10 +10,12 @@ import org.structure.repository.RegistrationRepository;
 import org.structure.repository.UserRepository;
 import org.structure.services.interfaces.UserService;
 
+import javax.transaction.Transactional;
 import java.util.List;
 
 @Service
 @RequiredArgsConstructor
+@Transactional
 public class UserServiceImpl implements UserService {
 
     private final UserRepository userRepository;
@@ -38,8 +40,9 @@ public class UserServiceImpl implements UserService {
         userRepository.save(user);
     }
 
-    public void updateUser(long id, String type, String newValue) {
-        User user = getUser(id);
+    @SneakyThrows
+    public void updateUser(String login, String type, String newValue) {
+        User user = userRepository.findUserByLogin(login).orElseThrow(Exception::new);
 
         if (type.equals("name")) {
             user.setName(newValue);
@@ -47,16 +50,18 @@ public class UserServiceImpl implements UserService {
             user.setNumber(newValue);
         } else if (type.equals("email")) {
             user.setEmail(newValue);
-        } else if (type.equals("login")) {
-            user.setLogin(newValue);
         } else if (type.equals("password")) {
-            user.setPassword(passwordEncoder.encode(user.getPassword()));
+            user.setPassword(passwordEncoder.encode(newValue));
         }
 
         userRepository.save(user);
     }
 
-    public void deleteUser(long id) {
+    public void deleteUserById(long id) {
         userRepository.deleteById(id);
+    }
+
+    public void deleteUserByLogin(String login) {
+        userRepository.deleteUserByLogin(login);
     }
 }
