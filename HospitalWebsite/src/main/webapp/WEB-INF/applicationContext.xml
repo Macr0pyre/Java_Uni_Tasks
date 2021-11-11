@@ -38,18 +38,4 @@
         <property name="viewNames" value="*"/>
     </bean>
 
-    <util:list id="users" value-type="org.structure.models.User"/>
-
-    <bean id="userDao" class="org.structure.dal.impls.UserTestDAO">
-        <property name="testUsers" ref="users"/>
-    </bean>
-
-    <bean id="userService" class="org.structure.services.impls.UserServiceImpl">
-        <constructor-arg name="userDao" ref="userDao"/>
-    </bean>
-
-    <bean id="userController" class="org.structure.controllers.UserController">
-        <constructor-arg name="userService" ref="userService"/>
-    </bean>
-
 </beans>

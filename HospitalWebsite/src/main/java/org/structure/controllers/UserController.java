@@ -50,13 +50,12 @@ public class UserController {
 
     @PostMapping("/add-user")
     public ModelAndView addUserRequest(HttpServletRequest request, HttpServletResponse response) throws IOException {
-        String id = request.getParameter("id");
         String name = request.getParameter("name");
         String number = request.getParameter("number");
         String email = request.getParameter("email");
         String login = request.getParameter("login");
         String password = request.getParameter("password");
-        addNewUser(id, name, number, email, login, password);
+        addNewUser(name, number, email, login, password);
 
         return new ModelAndView("add_user");
     }
@@ -79,9 +78,8 @@ public class UserController {
         return new ModelAndView("delete_user");
     }
 
-    private void addNewUser(String id, String name, String number, String email, String login, String password) {
+    private void addNewUser(String name, String number, String email, String login, String password) {
         User user = new User();
-        user.setId(Long.parseLong(id));
         user.setName(name);
         user.setNumber(number);
         user.setEmail(email);

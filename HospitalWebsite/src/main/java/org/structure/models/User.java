@@ -31,7 +31,6 @@ public class User {
                 "login='" + login + '\'' +
                 ", name='" + name + '\'' +
                 ", number='" + number + '\'' +
-                ", email='" + email + '\'' +
-                '}';
+                ", email='" + email;
     }
 }
