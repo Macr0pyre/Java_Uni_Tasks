@@ -10,7 +10,7 @@
 <body>
 <div align="center">
     <h1>Here you can update your account</h1>
-    <form action="/user/update-user" method="post">
+    <form action="/doctor/update-doctor" method="post">
         <table>
             <tr>
                 <td>Select parameter to change</td>
@@ -28,8 +28,7 @@
                 <td><input type="text" name="newValue"/></td>
             </tr>
         </table>
-        <input type="submit" value="Update user"/></form>
+        <input type="submit" value="Update doctor"/></form>
 </div>
 </body>
 </html>
-

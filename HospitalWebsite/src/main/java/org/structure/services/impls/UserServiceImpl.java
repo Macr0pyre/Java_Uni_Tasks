@@ -2,6 +2,7 @@ package org.structure.services.impls;
 
 import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.structure.models.User;
 import org.structure.repository.AppointmentRepository;
@@ -21,9 +22,11 @@ public class UserServiceImpl implements UserService {
 
     private final AppointmentRepository appointmentRepository;
 
+    private final PasswordEncoder passwordEncoder;
+
     @SneakyThrows
-    public User getUser(long id) {
-        return userRepository.findById(id).orElseThrow(Exception::new);
+    public User getUserByLogin(String login) {
+        return userRepository.findUserByLoginLogin(login).orElseThrow(Exception::new);
     }
 
     public List<User> getAllUsers() {
@@ -31,11 +34,13 @@ public class UserServiceImpl implements UserService {
     }
 
     public void addUser(User user) {
+        user.setPassword(passwordEncoder.encode(user.getPassword()));
         userRepository.save(user);
     }
 
-    public void updateUser(long id, String type, String newValue) {
-        User user = getUser(id);
+    @SneakyThrows
+    public void updateUser(String login, String type, String newValue) {
+        User user = userRepository.findUserByLoginLogin(login).orElseThrow(Exception::new);
 
         if (type.equals("name")) {
             user.setName(newValue);
@@ -43,16 +48,20 @@ public class UserServiceImpl implements UserService {
             user.setNumber(newValue);
         } else if (type.equals("email")) {
             user.setEmail(newValue);
-        } else if (type.equals("login")) {
-            user.setLogin(newValue);
         } else if (type.equals("password")) {
-            user.setPassword(newValue);
+            user.setPassword(passwordEncoder.encode(newValue));
         }
 
         userRepository.save(user);
     }
 
-    public void deleteUser(long id) {
+    public void deleteUserById(long id) {
         userRepository.deleteById(id);
+    }
+
+    @SneakyThrows
+    public void deleteUserByLogin(String login) {
+        User user = userRepository.findUserByLoginLogin(login).orElseThrow(Exception::new);
+        userRepository.deleteById(user.getId());
     }
 }
