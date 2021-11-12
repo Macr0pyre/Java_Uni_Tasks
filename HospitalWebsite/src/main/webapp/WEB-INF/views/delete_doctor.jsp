@@ -10,9 +10,9 @@
 <body>
 <div align="center">
     <h1>Here you can delete your account</h1>
-    <form action="/user/delete-user" method="post">
-        <input type="submit" value="Delete user"/></form>
+    <form action="/doctor/delete-doctor" method="post">
+        <input type="submit" value="Delete doctor"/>
+    </form>
 </div>
 </body>
 </html>
-

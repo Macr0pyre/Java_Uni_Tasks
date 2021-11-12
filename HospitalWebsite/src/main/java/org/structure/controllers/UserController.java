@@ -1,6 +1,7 @@
 package org.structure.controllers;
 
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.structure.models.Login;
 import org.structure.models.User;
 import org.structure.services.interfaces.UserService;
 import org.springframework.stereotype.Controller;
@@ -8,11 +9,9 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.ModelAndView;
 
-import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.util.List;
 
 @Controller
@@ -29,20 +28,20 @@ public class UserController {
         return modelAndView;
     }
 
-    @GetMapping("update-user")
+    @GetMapping("/user/update-user")
     public ModelAndView updateUserPage() {
         ModelAndView modelAndView = new ModelAndView("update_user");
         return modelAndView;
     }
 
-    @GetMapping("delete-user")
+    @GetMapping("/user/delete-user")
     public ModelAndView deleteUserPage() {
         ModelAndView modelAndView = new ModelAndView("delete_user");
         return modelAndView;
     }
 
-    @GetMapping("/get-users")
-    public ModelAndView getUsersRequest(HttpServletRequest request, HttpServletResponse response) throws IOException {
+    @GetMapping("/user/get-users")
+    public ModelAndView getUsersRequest(HttpServletResponse response) throws IOException {
         ModelAndView modelAndView = new ModelAndView("get_users");
         response.setContentType("text/html;charset=UTF-8");
         List<User> users = userService.getAllUsers();
@@ -51,7 +50,7 @@ public class UserController {
     }
 
     @PostMapping("/add-user")
-    public ModelAndView addUserRequest(HttpServletRequest request, HttpServletResponse response) throws IOException {
+    public ModelAndView addUserRequest(HttpServletRequest request) throws IOException {
         String name = request.getParameter("name");
         String number = request.getParameter("number");
         String email = request.getParameter("email");
@@ -62,9 +61,8 @@ public class UserController {
         return new ModelAndView("add_user");
     }
 
-    @PostMapping("/update-user")
-    public ModelAndView updateUserRequest(HttpServletRequest request, HttpServletResponse response) throws IOException {
-        String id = request.getParameter("id");
+    @PostMapping("/user/update-user")
+    public ModelAndView updateUserRequest(HttpServletRequest request) throws IOException {
         String type = request.getParameter("parameter");
         String newValue = request.getParameter("newValue");
         userService.updateUser(SecurityContextHolder.getContext().getAuthentication().getName(), type, newValue);
@@ -72,7 +70,7 @@ public class UserController {
         return new ModelAndView("update_user");
     }
 
-    @PostMapping("/delete-user")
+    @PostMapping("/user/delete-user")
     public String deleteUserRequest() throws IOException {
         userService.deleteUserByLogin(SecurityContextHolder.getContext().getAuthentication().getName());
         return "redirect:/logout";
@@ -83,7 +81,7 @@ public class UserController {
         user.setName(name);
         user.setNumber(number);
         user.setEmail(email);
-        user.setLogin(login);
+        user.setLogin(new Login(0, login, null, null));
         user.setPassword(password);
 
         userService.addUser(user);

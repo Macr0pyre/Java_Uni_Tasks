@@ -10,12 +10,10 @@ import org.structure.repository.RegistrationRepository;
 import org.structure.repository.UserRepository;
 import org.structure.services.interfaces.UserService;
 
-import javax.transaction.Transactional;
 import java.util.List;
 
 @Service
 @RequiredArgsConstructor
-@Transactional
 public class UserServiceImpl implements UserService {
 
     private final UserRepository userRepository;
@@ -27,8 +25,8 @@ public class UserServiceImpl implements UserService {
     private final PasswordEncoder passwordEncoder;
 
     @SneakyThrows
-    public User getUser(long id) {
-        return userRepository.findById(id).orElseThrow(Exception::new);
+    public User getUserByLogin(String login) {
+        return userRepository.findUserByLoginLogin(login).orElseThrow(Exception::new);
     }
 
     public List<User> getAllUsers() {
@@ -42,7 +40,7 @@ public class UserServiceImpl implements UserService {
 
     @SneakyThrows
     public void updateUser(String login, String type, String newValue) {
-        User user = userRepository.findUserByLogin(login).orElseThrow(Exception::new);
+        User user = userRepository.findUserByLoginLogin(login).orElseThrow(Exception::new);
 
         if (type.equals("name")) {
             user.setName(newValue);
@@ -61,7 +59,9 @@ public class UserServiceImpl implements UserService {
         userRepository.deleteById(id);
     }
 
+    @SneakyThrows
     public void deleteUserByLogin(String login) {
-        userRepository.deleteUserByLogin(login);
+        User user = userRepository.findUserByLoginLogin(login).orElseThrow(Exception::new);
+        userRepository.deleteById(user.getId());
     }
 }

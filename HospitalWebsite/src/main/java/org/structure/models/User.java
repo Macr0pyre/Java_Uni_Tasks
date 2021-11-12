@@ -16,10 +16,17 @@ public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
+
     private String name;
+
     private String number;
+
     private String email;
-    private String login;
+
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "login_id", referencedColumnName = "id")
+    private Login login;
+
     private String password;
 
     @OneToMany(mappedBy = "user")
@@ -31,7 +38,6 @@ public class User {
                 "login='" + login + '\'' +
                 ", name='" + name + '\'' +
                 ", number='" + number + '\'' +
-                ", email='" + email + '\'' +
-                '}';
+                ", email='" + email;
     }
 }
