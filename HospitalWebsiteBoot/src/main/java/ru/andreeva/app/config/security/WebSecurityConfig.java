@@ -1,4 +1,4 @@
-package org.structure.config.security;
+package ru.andreeva.app.config.security;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
@@ -23,10 +23,10 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        http
+        http.httpBasic().and()
                 .csrf().disable()
                 .authorizeRequests()
-                .antMatchers("/sign-in", "/add-user", "/add-doctor").anonymous()
+                .antMatchers("/sign-in", "/doctor-sign-up", "/user-sign-up").anonymous()
                 .antMatchers("/doctor/**").hasRole("DOCTOR")
                 .antMatchers("/user/**").hasRole("USER")
                 .anyRequest().authenticated()
